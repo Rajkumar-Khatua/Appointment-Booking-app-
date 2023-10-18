@@ -9,6 +9,7 @@ import {
   ScrollView,
   Alert,
   Pressable,
+  Image,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
@@ -215,7 +216,6 @@ const SignupScreen = () => {
               {acceptTerms ? <Text style={styles.checkboxText}>✓</Text> : null}
             </TouchableOpacity>
             <Text style={styles.termsText}>
-              
               I accept the Terms and Conditions
             </Text>
           </View>

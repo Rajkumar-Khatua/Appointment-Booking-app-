@@ -1,4 +1,3 @@
-// OnboardingNavigation.js
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignupScreen from "../screens/SignupScreen";

@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigation from "./components/AppNavigation";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
 import OnboardingNavigation from "./components/OnboardingNavigation";
 
 export default function App() {
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
+  const [userAuthenticated, setUserAuthenticated] = useState(true);
 
   return (
     <SafeAreaProvider>
