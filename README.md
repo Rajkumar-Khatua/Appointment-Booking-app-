@@ -39,8 +39,8 @@ To run this project locally, follow these steps:
 1. **Clone the Repository:**
 
   ```bash
-   git clone <repository_url>
-   cd doctor-appointment-booking
+   git clone https://github.com/Rajkumar-Khatua/Appointment-Booking-app-.git
+   cd Appointment-Booking-app
   ```
 
 2. **Install Dependencies:**
