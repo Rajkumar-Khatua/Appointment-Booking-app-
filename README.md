@@ -57,74 +57,75 @@ To run this project locally, follow these steps:
 4. **Start the Server:**
      Run the following command to initiate the backend server:
    
-   ```bash
+ ```bash
    npm start
-   ```
+ ```
 5. **Start the Frontend:**
    Navigate to the frontend directory and run the following:
 
-  ```bash
+ ```bash
   npm install
   npm start
-  ```
+ ```
 6. **Open the App:**
    Access the app through an emulator, your mobile device, or a web browser.
 
 
 ## Project Structure
 
-Doctor-Appointment-App/
-├── backend/
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── doctorController.js
-│   │   ├── patientController.js
-│   │   ├── appointmentController.js
-│   ├── middlewares/
-│   │   ├── authMiddleware.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Doctor.js
-│   │   ├── Patient.js
-│   │   ├── Appointment.js
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── doctorRoutes.js
-│   │   ├── patientRoutes.js
-│   │   ├── appointmentRoutes.js
-│   ├── app.js
-│   ├── config.js
-│   ├── .env
-│   ├── package.json
-│   ├── README.md
-├── frontend/
-│   ├── assets/
-│   │   ├── images/
-│   │   ├── fonts/
-│   ├── components/
-│   │   ├── Auth/
-│   │   │   ├── Signup.js
-│   │   │   ├── Login.js
-│   ├── screens/
-│   │   ├── HomeScreen.js
-│   │   ├── ProfileScreen.js
-│   │   ├── DoctorListsScreen.js
-│   │   ├── DoctorDetailsScreen.js
-│   │   ├── AppointmentBookingScreen.js
-│   │   ├── ViewAppointmentsScreen.js
-│   ├── navigation/
-│   │   ├── AppNavigation.js
-│   │   ├── AuthNavigation.js
-│   ├── utils/
-│   │   ├── api.js
-│   │   ├── auth.js
-│   ├── App.js
-│   ├── package.json
-│   ├── .env
-│   ├── README.md
-├── .gitignore
-├── package.json
-├── README.md
+## Backend
+
+The backend of the application is responsible for handling API requests, managing authentication, and interacting with the database.
+
+- **controllers/**: Contains controllers for different aspects of the application, including authentication, doctor management, patient management, and appointment handling.
+
+- **middlewares/**: Includes middleware functions for route protection, authentication checks, and other request preprocessing.
+
+- **models/**: Defines data models for users (doctors and patients) and appointments.
+
+- **routes/**: Specifies API routes for different functionalities such as authentication, doctor management, patient management, and appointment management.
+
+- **app.js**: The main application file that sets up the server, middleware, and routes.
+
+- **config.js**: Stores configuration settings for the application.
+
+- **.env**: Stores environment-specific variables, such as database connection strings.
+
+- **package.json**: Contains dependencies and scripts for the backend.
+
+- **README.md**: Documentation for the backend code.
+
+## Frontend
+
+The frontend of the application is built using React Native and is responsible for the user interface and interaction.
+
+- **assets/**: Contains image and font assets used in the application.
+
+- **components/**: Includes reusable UI components and screens.
+
+- **screens/**: Defines screens for different parts of the application, including the home screen, profile screen, doctor lists, appointment booking, and more.
+
+- **navigation/**: Manages navigation between different screens and sections of the app.
+
+- **utils/**: Contains utility functions for API communication and authentication.
+
+- **App.js**: The main entry point for the frontend application.
+
+- **package.json**: Contains dependencies and scripts for the frontend.
+
+- **.env**: Stores environment-specific variables for the frontend.
+
+- **README.md**: Documentation for the frontend code.
+
+## Project Root
+
+- **.gitignore**: Specifies files and directories to be ignored by version control.
+
+- **package.json**: Contains dependencies and scripts for the root directory.
+
+- **README.md**: This documentation file.
+
+Feel free to explore the individual directories for more detailed information and documentation.
 
 
 ## Contributing
