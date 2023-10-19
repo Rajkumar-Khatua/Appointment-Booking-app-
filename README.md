@@ -38,10 +38,10 @@ To run this project locally, follow these steps:
 
 1. **Clone the Repository:**
 
-   ```bash
+  ```bash
    git clone <repository_url>
    cd doctor-appointment-booking
-   ```
+  ```
 
 2. **Install Dependencies:**
 
