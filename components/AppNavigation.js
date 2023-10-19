@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import DoctorListsScreen from "../screens/DoctorListsScreen";
@@ -18,7 +19,7 @@ const AppNavigation = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+            <Octicons name="home" size={size} color={color} />
           ),
           headerShown: false,
         }}
@@ -28,8 +29,10 @@ const AppNavigation = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+            <Ionicons name="person-circle-outline" size={size} color={color} />
+            // <Ionicons name="person-circle-outline" size={24} color="black" />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -47,10 +50,14 @@ const AppNavigation = () => {
         component={DoctorDetailsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="person" size={size} color={color} />
+            <Ionicons
+              name="information-circle-outline"
+              size={size}
+              color={color}
+            />
+            // <Ionicons name="information-circle-outline" size={24} color="black" />
           ),
           headerShown: false,
-
         }}
       />
 
