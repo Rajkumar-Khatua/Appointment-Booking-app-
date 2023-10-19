@@ -20,7 +20,7 @@ const AppNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
-          headerShown:false,
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -39,17 +39,21 @@ const AppNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="local-hospital" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
-      {/* <Tab.Screen
-        name="Doctor Details"
+      <Tab.Screen
+        name="DoctorDetails"
         component={DoctorDetailsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="person" size={size} color={color} />
           ),
+          headerShown: false,
+
         }}
-      /> */}
+      />
+
       <Tab.Screen
         name="Appointment Booking"
         component={AppointmentBookingScreen}
