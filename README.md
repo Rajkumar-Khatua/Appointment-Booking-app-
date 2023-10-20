@@ -60,15 +60,20 @@ To run this project locally, follow these steps:
  ```bash
    npm start
  ```
+  or
+ ```bash
+   npx nodemon
+ ```
+
 5. **Start the Frontend:**
    Navigate to the frontend directory and run the following:
 
  ```bash
   npm install
-  npm start
+  npx expo start
  ```
 6. **Open the App:**
-   Access the app through an emulator, your mobile device, or a web browser.
+   Access the app through an emulator, your mobile device.
 
 
 ## Project Structure
