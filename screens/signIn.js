@@ -12,11 +12,18 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigation = useNavigation();
+
+  const handleGoToSignup = () => {
+    navigation.navigate("Signup");
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -36,7 +43,7 @@ const SignIn = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#00b894" }}>
+    <SafeAreaView style={{ flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={{ flex: 1 }}
@@ -72,7 +79,11 @@ const SignIn = () => {
             </TouchableOpacity>
           </View>
           <CustomButton title={"Sign Up"} onPress={handleSignup} />
+          <TouchableOpacity onPress={handleGoToSignup} style={styles.link}>
+          <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
+        </TouchableOpacity>
         </ScrollView>
+        
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -117,6 +128,14 @@ const styles = StyleSheet.create({
   },
   passwordVisibilityButton: {
     padding: 10,
+  },
+  link: {
+    alignItems: "center",
+    marginTop: 16,
+  },
+  linkText: {
+    color: "#00b894",
+    fontSize: 16,
   },
 });
 

@@ -6,7 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
 
 export default function App() {
-  const [userAuthenticated, setUserAuthenticated] = useState(true);
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   // You might have a logic here to set userAuthenticated to true when the user logs in or signs up.
 

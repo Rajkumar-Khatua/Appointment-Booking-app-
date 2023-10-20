@@ -3,20 +3,22 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
   Alert,
-  Pressable,
+  ActivityIndicator,
+  Modal,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Icon from "react-native-vector-icons/FontAwesome"; // You can use other icons if preferred
 import CustomButton from "../components/CustomButton";
+
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
@@ -31,6 +33,15 @@ const SignupScreen = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [chosenDate, setChosenDate] = useState(new Date());
 
+  const navigation = useNavigation();
+
+  const apiEndpoint =
+    "https://0b60-2409-4088-ae8d-1ce-af83-2ce4-3270-3504.ngrok.io/api/auth/signup";
+
+  const handleGoToSignin = () => {
+    navigation.navigate("Signin");
+  };
+
   const showDatepicker = () => {
     setShowDatePicker(true);
   };
@@ -43,39 +54,101 @@ const SignupScreen = () => {
   const [specialty, setSpecialty] = useState("");
   const [licenseNumber, setLicenseNumber] = useState("");
 
-  const handleSignup = () => {
-    // Perform validation
-    if (
-      !name ||
-      !email ||
-      !password ||
-      !confirmPassword ||
-      !dob ||
-      !mobileNumber
-    ) {
-      Alert.alert("Error", "All fields are required.");
-      return;
-    }
+  const [isLoading, setIsLoading] = useState(false);
 
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match.");
-      return;
-    }
+  const handleSignup = async () => {
+    try {
+      setIsLoading(true); // Start loading
 
-    if (!acceptTerms) {
-      Alert.alert("Error", "You must accept the terms and conditions.");
-      return;
-    }
+      // Perform validation
+      if (
+        !name ||
+        !email ||
+        !password ||
+        !confirmPassword ||
+        !dob ||
+        !mobileNumber
+      ) {
+        Alert.alert("Error", "All fields are required.");
+        throw new Error("All fields are required.");
+      }
 
-    if (accountType === "doctor" && (!specialty || !licenseNumber)) {
-      Alert.alert("Error", "Doctor-specific fields are required.");
-      return;
-    }
+      if (password !== confirmPassword) {
+        Alert.alert("Error", "Passwords do not match.");
+        throw new Error("Passwords do not match.");
+      }
 
-    // Validation passed, continue with registration logic
-    // You can make an API call here to register the user or perform any other actions.
-    // For simplicity, we'll just show a success message.
-    Alert.alert("Success", "Account created successfully!");
+      if (!acceptTerms) {
+        Alert.alert("Error", "You must accept the terms and conditions.");
+        throw new Error("You must accept the terms and conditions.");
+      }
+
+      // Create a payload object with common fields
+      const payload = {
+        name,
+        email,
+        password,
+        dob,
+        mobileNumber,
+        accountType,
+        acceptTerms,
+      };
+
+      // Conditionally add doctor-related fields when the accountType is "doctor"
+      if (accountType === "doctor") {
+        payload.specialty = specialty;
+        payload.licenseNumber = licenseNumber;
+      }
+
+      // Make an API call to register the user
+      const response = await axios.post(apiEndpoint, payload);
+
+      if (response.status === 201) {
+        // Clear all the input fields
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setDob("");
+        setMobileNumber("");
+        setAccountType("patient"); // You can set it to the default value
+        setSpecialty("");
+        setLicenseNumber("");
+        setAcceptTerms(false);
+
+        // Registration successful
+        Alert.alert("Success", "Account created successfully!");
+      } else {
+        throw new Error("Registration failed");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          if (
+            error.response.status === 400 &&
+            error.response.data.message === "Email is already in use."
+          ) {
+            // Handle duplicate email error
+            Alert.alert("Error", "This email address is already in use.");
+          } else {
+            console.error(
+              "Server Error:",
+              error.response.status,
+              error.response.data
+            );
+            Alert.alert("Error", "Registration failed. Please try again.");
+          }
+        } else {
+          console.error("Network Error:", error.message);
+          Alert.alert("Network Error", "Please check your connection.");
+        }
+      } else {
+        console.error("Request Error:", error.message);
+        // Handle other errors
+      }
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
   };
 
   return (
@@ -219,6 +292,29 @@ const SignupScreen = () => {
             </Text>
           </View>
           <CustomButton title={"Sign Up"} onPress={handleSignup} />
+          {isLoading && (
+        <Modal
+          transparent={true}
+          animationType="slide"
+          visible={isLoading}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0, 184, 147, 0.103)",
+            }}
+          >
+            <ActivityIndicator size="large" color= "#00b894" />
+          </View>
+        </Modal>
+      )}
+          <TouchableOpacity onPress={handleGoToSignin} style={styles.link}>
+            <Text style={styles.linkText}>
+              Already have an account? Sign In
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -306,6 +402,14 @@ const styles = StyleSheet.create({
   },
   termsText: {
     fontSize: 14,
+  },
+  link: {
+    alignItems: "center",
+    marginTop: 16,
+  },
+  linkText: {
+    color: "#00b894",
+    fontSize: 16,
   },
 });
 

@@ -26,14 +26,14 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    enum: ["patient", "doctor"], // You can specify other account types if needed
+    enum: ["patient", "doctor"],
     required: true,
   },
   specialty: {
-    type: String, // Only for "doctor" account type
+    type: String,
   },
   licenseNumber: {
-    type: String, // Only for "doctor" account type
+    type: String,
   },
   acceptTerms: {
     type: Boolean,
