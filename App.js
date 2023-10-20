@@ -1,17 +1,19 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigation from "./components/AppNavigation";
+import OnboardingNavigation from "./components/OnboardingNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
-import OnboardingNavigation from "./components/OnboardingNavigation";
 
 export default function App() {
   const [userAuthenticated, setUserAuthenticated] = useState(true);
 
+  // You might have a logic here to set userAuthenticated to true when the user logs in or signs up.
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        {userAuthenticated ? <AppNavigation /> : <OnboardingNavigation />}
+        {!userAuthenticated ? <OnboardingNavigation /> : <AppNavigation />}
       </NavigationContainer>
     </SafeAreaProvider>
   );

@@ -30,7 +30,6 @@ const AppNavigation = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle-outline" size={size} color={color} />
-            // <Ionicons name="person-circle-outline" size={24} color="black" />
           ),
           headerShown: false,
         }}
@@ -55,7 +54,6 @@ const AppNavigation = () => {
               size={size}
               color={color}
             />
-            // <Ionicons name="information-circle-outline" size={24} color="black" />
           ),
           headerShown: false,
         }}

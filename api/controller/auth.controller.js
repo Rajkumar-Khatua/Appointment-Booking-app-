@@ -1,6 +1,6 @@
 // authController.js
 
-const User = require("../models/userModel");
+const User = require("../Models/User.model");
 
 // Signup controller
 exports.signup = async (req, res) => {
@@ -39,3 +39,6 @@ exports.signup = async (req, res) => {
     res.status(500).json({ message: "Signup failed", error: error.message });
   }
 };
+
+// Login controller
+exports.login = async (req, res) => {};

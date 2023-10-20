@@ -1,24 +1,44 @@
-// Sign up models using mongoDB
+// userModel.js
+
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
-  {
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String,
-    accountType: String,
-    specialty: String,
-    licenseNumber: String,
-    acceptTerms: Boolean,
-    dob: Date,
-    mobileNumber: String,
-    createdAt: Date,
-    updatedAt: Date,
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  dob: {
+    type: Date,
+    required: true,
+  },
+  mobileNumber: {
+    type: String,
+    required: true,
+  },
+  accountType: {
+    type: String,
+    enum: ["patient", "doctor"], // You can specify other account types if needed
+    required: true,
+  },
+  specialty: {
+    type: String, // Only for "doctor" account type
+  },
+  licenseNumber: {
+    type: String, // Only for "doctor" account type
+  },
+  acceptTerms: {
+    type: Boolean,
+    required: true,
+  },
+});
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
