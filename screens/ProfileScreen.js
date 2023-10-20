@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import CustomButton from "../components/CustomButton";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -39,9 +39,8 @@ const ProfileScreen = () => {
 
   const openCamera = async () => {
     if (cameraPermission.status === "granted") {
-      setModalVisible(false); // Close the image picker modal
+      setModalVisible(false);
       // You can navigate to the camera screen or add camera functionality here
-      // Example: navigation.navigate("CameraScreen");
     } else {
       alert("Camera permission is required to use the camera.");
     }
@@ -51,7 +50,10 @@ const ProfileScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()} // Use the navigation prop
+          >
             <Ionicons name="ios-arrow-back" size={30} color="#555" />
           </TouchableOpacity>
           <Text style={styles.headerText}>My Profile</Text>
@@ -89,7 +91,7 @@ const ProfileScreen = () => {
       >
         <View style={styles.modalContainer}>
           <CustomButton
-            title="Pick an image from camera roll"
+            title="Pick an image from the camera roll"
             onPress={pickImage}
           />
           <CustomButton title="Open Camera" onPress={openCamera} />
@@ -161,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default ProfileScreen; // Wrap the component with withNavigation
