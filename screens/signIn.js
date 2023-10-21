@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,17 +7,24 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { useAuth } from "../AuthContext"; // Import the useAuth hook
 
 const SignIn = () => {
+  const { updateAuthentication } = useAuth(); // Access the updateAuthentication function from the AuthContext
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigation = useNavigation();
 
@@ -29,17 +36,52 @@ const SignIn = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSignup = () => {
-    // Perform validation
+  // Function to validate email format
+  const validateEmail = (email) => {
+    // Regular expression for a valid email format
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return emailRegex.test(email);
+  };
+
+  const apiEndpoint =
+    "https://60e1-2409-4088-ae8d-1ce-4a8d-684c-10e6-3d84.ngrok.io/api/auth/signin";
+
+  const handleSignIn = async () => {
     if (!email || !password) {
-      Alert.alert("Error", "All fields are required.");
+      setError("All fields are required.");
       return;
     }
 
-    // Validation passed, continue with registration logic
-    // You can make an API call here to register the user or perform any other actions.
-    // For simplicity, we'll just show a success message.
-    Alert.alert("Success", "Login successfully!");
+    // Client-side email validation
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    setLoading(true);
+    setError(""); // Clear any previous error message
+
+    try {
+      const response = await axios.post(apiEndpoint, {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        // Login successful
+        Alert.alert("Success", "Login successful!");
+        updateAuthentication(true); // Update authentication state
+        // Explicitly navigate to the "Home" screen
+        navigation.navigate("Home");
+      } else {
+        setError("Email or password is incorrect.");
+      }
+    } catch (error) {
+      setError("Login failed. Please check your connection.");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -78,7 +120,18 @@ const SignIn = () => {
               />
             </TouchableOpacity>
           </View>
-          <CustomButton title={"Sign Up"} onPress={handleSignup} />
+          <CustomButton
+            title={loading ? "Signing In..." : "Sign In"}
+            onPress={handleSignIn}
+            disabled={loading}
+          />
+          {loading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#00b894" />
+            </View>
+          )}
+          {error !== "" && <Text style={styles.errorText}>{error}</Text>}
+
           <TouchableOpacity onPress={handleGoToSignup} style={styles.link}>
             <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
           </TouchableOpacity>
@@ -122,7 +175,6 @@ const styles = StyleSheet.create({
   },
   passwordInput: {
     flex: 1,
-
     height: 40,
   },
   passwordVisibilityButton: {

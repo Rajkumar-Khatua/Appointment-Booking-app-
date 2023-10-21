@@ -24,6 +24,7 @@ const AppNavigation = () => {
           headerShown: false,
         }}
       />
+
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}

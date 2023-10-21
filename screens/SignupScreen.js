@@ -37,7 +37,7 @@ const SignupScreen = () => {
   const navigation = useNavigation();
 
   const apiEndpoint =
-    "https://b35b-2409-4088-ae8d-1ce-968-9915-458d-34bf.ngrok.io/api/auth/signup";
+    " https://60e1-2409-4088-ae8d-1ce-4a8d-684c-10e6-3d84.ngrok.io/api/auth/signup";
 
   const handleGoToSignin = () => {
     navigation.navigate("Signin");
@@ -119,6 +119,7 @@ const SignupScreen = () => {
 
         // Registration successful
         Alert.alert("Success", "Account created successfully!");
+        navigation.navigate("Home")
       } else {
         throw new Error("Registration failed");
       }
