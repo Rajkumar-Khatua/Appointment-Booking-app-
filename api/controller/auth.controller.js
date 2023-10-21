@@ -1,6 +1,7 @@
 // authController.js
 
 const User = require("../Models/User.model");
+const bcrypt = require("bcrypt");
 
 // Signup controller
 exports.signup = async (req, res) => {
@@ -23,10 +24,20 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: "Email is already in use." });
     }
 
+    // Check if the user has accepted the terms and conditions
+    if (!acceptTerms) {
+      return res
+        .status(400)
+        .json({ message: "Please accept the terms and conditions." });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10); // You can adjust the saltRounds (second argument) as needed.
+
     const user = new User({
       name,
       email,
-      password,
+      password: hashedPassword,
       dob,
       mobileNumber,
       accountType,
@@ -44,4 +55,31 @@ exports.signup = async (req, res) => {
 };
 
 // Login controller
-exports.login = async (req, res) => {};
+exports.signin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if a user with the provided email exists
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "Email or password is incorrect." });
+    }
+
+    // Verify the provided password with the stored hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ message: "Email or password is incorrect." });
+    }
+
+    // Return a success message or a JWT token for authentication
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Login failed", error: error.message });
+  }
+};

@@ -43,7 +43,7 @@ const SignIn = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={{ flex: 1 }}
@@ -80,10 +80,9 @@ const SignIn = () => {
           </View>
           <CustomButton title={"Sign Up"} onPress={handleSignup} />
           <TouchableOpacity onPress={handleGoToSignup} style={styles.link}>
-          <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
-        </TouchableOpacity>
+            <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
+          </TouchableOpacity>
         </ScrollView>
-        
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

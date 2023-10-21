@@ -19,6 +19,7 @@ import CustomButton from "../components/CustomButton";
 
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { BlurView } from "expo-blur";
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
@@ -36,7 +37,7 @@ const SignupScreen = () => {
   const navigation = useNavigation();
 
   const apiEndpoint =
-    "https://0b60-2409-4088-ae8d-1ce-af83-2ce4-3270-3504.ngrok.io/api/auth/signup";
+    "https://b35b-2409-4088-ae8d-1ce-968-9915-458d-34bf.ngrok.io/api/auth/signup";
 
   const handleGoToSignin = () => {
     navigation.navigate("Signin");
@@ -293,23 +294,20 @@ const SignupScreen = () => {
           </View>
           <CustomButton title={"Sign Up"} onPress={handleSignup} />
           {isLoading && (
-        <Modal
-          transparent={true}
-          animationType="slide"
-          visible={isLoading}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(0, 184, 147, 0.103)",
-            }}
-          >
-            <ActivityIndicator size="large" color= "#00b894" />
-          </View>
-        </Modal>
-      )}
+            <Modal transparent={true} animationType="slide" visible={isLoading}>
+              <BlurView
+                intensity={100}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "rgba(0, 184, 147, 0.103)",
+                }}
+              >
+                <ActivityIndicator size="large" color="#00b894" />
+              </BlurView>
+            </Modal>
+          )}
           <TouchableOpacity onPress={handleGoToSignin} style={styles.link}>
             <Text style={styles.linkText}>
               Already have an account? Sign In
